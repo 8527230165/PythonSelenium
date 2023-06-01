@@ -18,5 +18,21 @@ driver.get("https://jqueryui.com/datepicker/")
 wait.until(EC.presence_of_element_located((By.XPATH,"//iframe[@class='demo-frame']")))
 driver.switch_to.frame(0)
 driver.find_element(By.XPATH,"//input[@id='datepicker']").click()
-month_year=driver.find_element(By.XPATH,"//div[@class='ui-datepicker-title']").text
-print(month_year)
+mm='September'
+yr='2023'
+dd='15'
+while True:
+    month=driver.find_element(By.XPATH,"//span[@class='ui-datepicker-month']").text
+    year=driver.find_element(By.XPATH,"//span[@class='ui-datepicker-year']").text
+    if month==mm and year==yr:
+        break
+    else:
+        next=driver.find_element(By.XPATH,"//span[@class='ui-icon ui-icon-circle-triangle-e']")
+        next.click()
+dates=driver.find_elements(By.XPATH,"//table[@class='ui-datepicker-calendar']//tbody//tr//td")
+print(len(dates))
+for date in dates:
+    if date.text==dd:
+        driver.find_element(By.XPATH,"//a[normalize-space()='"+dd+"']").click()
+        print(date.text)
+
